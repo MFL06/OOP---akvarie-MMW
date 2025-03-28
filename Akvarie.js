@@ -9,9 +9,11 @@ function draw(){
 }
 
 class Box{
-    constructor(x, y){
+    constructor(x, y, vx, vy){
         this.x = x;
         this.y = y;
+        this.vx = vx;
+        this.vy = vy;
         this.w = 25;
         this.h = 25;
         this.c = 'red';
