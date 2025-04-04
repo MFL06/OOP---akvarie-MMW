@@ -2,18 +2,20 @@ let v1 , v2, vsum;
 function setup(){
     createCanvas(400,400);
     //TenBoxes();
-    v1 = new Vektorer(100, 100);
-    v2 = new Vektorer(200, 150)
+    v1 = new Vektorer(200, 100);
+    v2 = new Vektorer(200, 150);
+    v3 = new Vektorer(400, 400);
     vsum = v1.add(v2);
-    v1k = v1.addK(5);
+    v1k = v1.addK(-0.5);
     v1.toString();
     v2.toString();
     vsum.toString();
     v1k.toString();
     v2.skalarProdukt(v1k);
     v1normalize = v1.normalize();
+    v1.isParallel(v1, v1k);
+    v1.isOpposite(v1, v1k);
 }
-
 
 function draw(){
     background('white');
@@ -25,7 +27,9 @@ function draw(){
     vsum.ShowVec('blue', 0, 0);
     v1k.ShowVec('yellow', 0, 0);
     v1normalize.ShowVec('red', 100, 100);
-    circle(300, 250, 5);
+    v3.ShowVec('orange', 200, 200);
+
+    v3.negate(v3);
 }
 
 // Boxene
@@ -97,15 +101,61 @@ class Vektorer{
     }
 
     skalarProdukt(other){
-        console.log((this.x * other.x) + (this.y * other.y)); 
+        return (this.x * other.x) + (this.y * other.y);
     }
 
     normalize(){
         return new Vektorer((1/Math.hypot(this.x, this.y)) * this.x, (1/Math.hypot(this.x, this.y) * this.y));
     }
 
-    isParallel(){
-        
+    isParallel(vec1, vec2){
+        let første;
+        let anden;
+        første = vec1.normalize();
+        console.log(første);
+        anden = vec2.normalize();
+        console.log(anden);
+        if(første.skalarProdukt(anden).toFixed(5) == 1 || første.skalarProdukt(anden).toFixed(5) == -1){
+            console.log('true ' + første.skalarProdukt(anden).toFixed(5));
+        }else{
+            console.log('false ' +   første.skalarProdukt(anden).toFixed(5));
+        }
+    }
+
+    isOpposite(vec1, vec2){
+        let første;
+        let anden;
+        første = vec1.normalize();
+        console.log(første);
+        anden = vec2.normalize();
+        console.log(anden);
+        if(første.skalarProdukt(anden).toFixed(5) == -1){
+            console.log('true ' + første.skalarProdukt(anden).toFixed(5));
+        }else{
+            console.log('false ' +   første.skalarProdukt(anden).toFixed(5));
+        }
+    }
+
+    isPerpendicular(vec1, vec2){
+        let første;
+        let anden;
+        første = vec1.normalize();
+        console.log(første);
+        anden = vec2.normalize();
+        console.log(anden);
+        if(første.skalarProdukt(anden).toFixed(5) == 0){
+            console.log('true ' + første.skalarProdukt(anden).toFixed(5));
+        }else{
+            console.log('false ' +   første.skalarProdukt(anden).toFixed(5));
+        }
+    }
+
+    negate(v){
+        let negatedVektor;
+        negatedVektor = v.addK(-1);
+        negatedVektor.ShowVec('orange', 200, 200);
+        fill('black');
+        circle(200, 200, 5)
     }
 }
 
