@@ -7,6 +7,8 @@ function setup(){
 let v1;
 let box1;
 
+let boxNum = 50;
+
 let boxArr = [];
 let vArr = [];
 
@@ -47,15 +49,24 @@ class Vektor{
 
 
 function spawnBoxes(){
-    for(let i = 0; i != 5; i ++){
-        boxArr.push(new Boxes(random(100, 300), random(100, 300), 'white'));
+    for(let i = 0; i != boxNum; i ++){
+        boxArr.push(new Boxes(random(50, 350), random(50, 350), 'white'));
         boxArr[i].show();
     }
 }
 
 function randomV(boxes){
-    for(let i = 0; i != 5; i ++){
+    for(let i = 0; i != boxes.length; i ++){
         vArr.push(new Vektor(random(-1, 1), random(-1, 1)));
         vArr[i].addV(boxes[i]);
+    }
+}
+
+function coherenceBias(boxes){
+    let coArr = [];
+    for(let i = 0; i != boxes.length; i++){
+        for(let e = 0; e != boxes.length; e++){
+            if(boxes[e])
+        }
     }
 }
