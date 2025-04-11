@@ -81,24 +81,34 @@ function coherenceBias(boxes, vektor){
         for(let e = 0; e != boxes.length; e++){
             if(i == e){
                 continue;
-            }else if(Math.hypot((boxes[i].x - boxes[e].x), (boxes[i].y - boxes[e].y)) < 40){
+            }else if(Math.hypot((boxes[i].x - boxes[e].x), (boxes[i].y - boxes[e].y)) < 70){
                 coArr.push(vektor[e]);
             }
         }
         //console.log(coArr);
         if(coArr.length >= 1){
-            for(let e = 0; e != (coArr.length - 1); e ++){
+            for(let e = 0; e < (coArr.length - 1); e ++){
             vekSumX += coArr[e].x;
             vekSumY += coArr[e].y;
             }
             avgVX = vekSumX/coArr.length;
             avgVY = vekSumY/coArr.length;
-            console.log(avgVX)
+            if(avgVX > 1 || avgVX < -1){
+                console.log(avgVX[e]);
+            }else if(avgVY > 1 || avgVY < -1){
+                console.log(avgVY[e]);
+            }
+            
+            let partOfX = (avgVX * 100)/100;
+            let partOfY = (avgVY * 100)/100;
+
+            boxes[i].x += partOfX;
+            boxes[i].y += partOfY;
         }
-
-
         
-
+        
+        vekSumX = 0;
+        vekSumY = 0;
         coArr = [];
     }
 }
