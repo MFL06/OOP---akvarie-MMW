@@ -1,7 +1,5 @@
 function setup(){
     createCanvas(400, 400);
-    //box1 = new Boxes(100, 100, 'white');
-    //v1 = new Vektor(1, 1);
     getBoxes();
 }
 
@@ -99,8 +97,8 @@ function coherenceBias(boxes, vektor){
                 console.log(avgVY[e]);
             }
             
-            let partOfX = (avgVX * 100)/100;
-            let partOfY = (avgVY * 100)/100;
+            let partOfX = (avgVX * 200)/100;
+            let partOfY = (avgVY * 200)/100;
 
             boxes[i].x += partOfX;
             boxes[i].y += partOfY;
