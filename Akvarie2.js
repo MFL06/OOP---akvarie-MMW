@@ -15,6 +15,7 @@ function draw(){
     background('black');
     spawnBoxes();
     randomV(boxArr);
+    borderControl();
     coherenceBias(boxArr, vArr);
 }
 
@@ -30,8 +31,6 @@ class Boxes{
     show(){
         rect(this.x, this.y, this.w, this.h);
     }
-
- 
 }
 
 class Vektor{
@@ -86,8 +85,8 @@ function coherenceBias(boxes, vektor){
         //console.log(coArr);
         if(coArr.length >= 1){
             for(let e = 0; e < (coArr.length - 1); e ++){
-            vekSumX += coArr[e].x;
-            vekSumY += coArr[e].y;
+                vekSumX += coArr[e].x;
+                vekSumY += coArr[e].y;
             }
             avgVX = vekSumX/coArr.length;
             avgVY = vekSumY/coArr.length;
