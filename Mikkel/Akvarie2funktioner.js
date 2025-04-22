@@ -40,6 +40,5 @@ function segregation(box, vek){
                 }
             }
         }
-        
     }
 }

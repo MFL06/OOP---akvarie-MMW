@@ -1,7 +1,12 @@
 function setup(){
     createCanvas(400, 400);
+    //generate boxes and vektors
     getBoxes(childBoxArr);
+    randomV(boxArr, vArr);
+
 }
+
+
 
 let v1;
 let box1;
@@ -16,9 +21,11 @@ let vArr = [];
 function draw(){
     background('black');
     //move
-    randomV(boxArr, vArr);
-    //show
+    moveBoxes(vArr, boxArr);
+    //show boxes
     spawnBoxes(childBoxArr);
+
+    //Boids algorithm stuff
     coherenceBias(boxArr, vArr);
     borderControl();
     segregation(boxArr, vArr)
@@ -33,13 +40,12 @@ class Boxes{
         this.h = 5;
     }
     
-    normalize(box, vek){
-        return (1/Math.hypot(this.x, vek.y)) * this.x, (1/Math.hypot(this.x, vek.y) * this.y);
+    normalize(vek){
+        return new ParentBox(1/Math.hypot(this.x + vek, this.y + vek)) * (this.x + vek), (1/Math.hypot(this.x + vek, this.y + vek) * (this.y + vek));
     }
 
-    addV(vek){
-        this.x = vek.x;
-        this.y = vek.y;
+    addV(vek, boxes){
+        boxes = boxes.normalize(vek);
     }
 
     show(){
@@ -49,7 +55,9 @@ class Boxes{
 }
 
 class ParentBox extends Boxes{
-
+    constructor(x, y, c){
+        super(x, y, c);
+    }
 }
 
 class ChildBox extends Boxes{
@@ -68,7 +76,7 @@ class Vektor{
 
 function getBoxes(child){
     for(let i = 0; i != boxNum; i ++){
-        boxArr.push(new ParentBox(random(50, 350), random(50, 350), 'blue'));
+        boxArr.push(new Boxes(random(50, 350), random(50, 350), 'blue'));
     }
 
     for(let i = 0; i != childBoxNum; i++){
@@ -91,7 +99,12 @@ function spawnBoxes(child){
 function randomV(boxes, vek){
     for(let i = 0; i != boxes.length; i ++){
         vek.push(new Vektor(random(-1, 1), random(-1, 1)));
-        boxes[i].addV(vek[i]);
+    }
+}
+
+function moveBoxes(boxes, vek){
+    for(let i = 0; i != boxNum; i++){
+        boxes[i].addV(vek[i], boxes[i]);
     }
 }
 
