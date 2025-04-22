@@ -15,8 +15,8 @@ function draw(){
     background('black');
     spawnBoxes();
     randomV(boxArr);
-    borderControl();
     coherenceBias(boxArr, vArr);
+    borderControl();
 }
 
 class Boxes{
@@ -78,7 +78,7 @@ function coherenceBias(boxes, vektor){
         for(let e = 0; e != boxes.length; e++){
             if(i == e){
                 continue;
-            }else if(Math.hypot((boxes[i].x - boxes[e].x), (boxes[i].y - boxes[e].y)) < 70){
+            }else if(Math.hypot((boxes[i].x - boxes[e].x), (boxes[i].y - boxes[e].y)) < 20){
                 coArr.push(vektor[e]);
             }
         }
