@@ -1,7 +1,7 @@
 function setup(){
     createCanvas(400, 400);
     //generate boxes and vektors
-    getBoxes(childBoxArr);
+    getBoxes(childBoxArr, boxArr);
     randomV(boxArr, vArr);
 
 }
@@ -15,15 +15,15 @@ let boxNum = 50;
 let childBoxNum = 10;
 
 let boxArr = [];
-let childBoxArr =[];
+let childBoxArr = [];
 let vArr = [];
 
 function draw(){
     background('black');
     //move
-    moveBoxes(vArr, boxArr);
+    moveBoxes(boxArr, vArr);
     //show boxes
-    spawnBoxes(childBoxArr);
+    spawnBoxes(childBoxArr, boxArr);
 
     //Boids algorithm stuff
     coherenceBias(boxArr, vArr);
@@ -41,11 +41,7 @@ class Boxes{
     }
     
     normalize(vek){
-        return new ParentBox(1/Math.hypot(this.x + vek, this.y + vek)) * (this.x + vek), (1/Math.hypot(this.x + vek, this.y + vek) * (this.y + vek));
-    }
-
-    addV(vek, boxes){
-        boxes = boxes.normalize(vek);
+        return new ParentBox(1 / Math.hypot(this.x + vek, this.y + vek)) * (this.x + vek), (1/Math.hypot(this.x + vek, this.y + vek) * (this.y + vek));
     }
 
     show(){
@@ -57,10 +53,18 @@ class Boxes{
 class ParentBox extends Boxes{
     constructor(x, y, c){
         super(x, y, c);
+        this.w = 5;
+        this.h = 5;
     }
 }
 
 class ChildBox extends Boxes{
+    constructor(x, y, c){
+        super(x, y, c);
+        this.w = 5;
+        this.h = 5;
+    }
+
     followParent(){
 
     }
@@ -74,9 +78,9 @@ class Vektor{
     }
 }
 
-function getBoxes(child){
+function getBoxes(child, parent){
     for(let i = 0; i != boxNum; i ++){
-        boxArr.push(new Boxes(random(50, 350), random(50, 350), 'blue'));
+        parent.push(new ParentBox(random(50, 350), random(50, 350), 'blue'));
     }
 
     for(let i = 0; i != childBoxNum; i++){
@@ -85,12 +89,12 @@ function getBoxes(child){
 }
 
 
-function spawnBoxes(child){
-    for(let i = 0; i != boxNum; i ++){
-        boxArr[i].show();
+function spawnBoxes(child, parent){
+    for(let i = 0; i != parent.length; i ++){
+        parent[i].show();
     }
 
-    for(let i = 0; i != childBoxNum; i++){
+    for(let i = 0; i != child.length; i++){
         child[i].show();
     }
 
@@ -104,7 +108,7 @@ function randomV(boxes, vek){
 
 function moveBoxes(boxes, vek){
     for(let i = 0; i != boxNum; i++){
-        boxes[i].addV(vek[i], boxes[i]);
+        boxes[i] = boxes[i].normalize(vek[i]);
     }
 }
 
