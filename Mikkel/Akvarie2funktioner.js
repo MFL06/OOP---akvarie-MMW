@@ -22,6 +22,24 @@ function borderControl(){
     }
 }
 
-function segregation(){
-
+function segregation(box, vek){
+    for(let i = 0; i != boxNum; i++){
+        for(let e = 0; e =! boxNum; e++){
+            if(e == i){
+                continue;
+            }else if(Math.hypot(box[i].x - box[e].x, box[i].y - box[e].y) > 5){
+                if(box[i].x - box[e].x > 0){
+                    vek[i].x += 1 / Math.hypot(box[i].x - box[e].x, box[i].y - box[e].y);
+                }else if(box[i].x - box[e].x < 0){
+                    vek[i].x -= 1 / Math.hypot(box[i].x - box[e].x, box[i].y - box[e].y);
+                }
+                if(box[i].y - box[e].y > 0){
+                    vek[i].y += 1 / Math.hypot(box[i].x - box[e].x, box[i].y - box[e].y);
+                }else if(box[i].y - box[e].y < 0){
+                    vek[i].y += 1 / Math.hypot(box[i].x - box[e].x, box[i].y - box[e].y);
+                }
+            }
+        }
+        
+    }
 }

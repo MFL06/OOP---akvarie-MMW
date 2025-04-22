@@ -118,7 +118,7 @@ class Vektorer{
         if(første.skalarProdukt(anden).toFixed(5) == 1 || første.skalarProdukt(anden).toFixed(5) == -1){
             console.log('true ' + første.skalarProdukt(anden).toFixed(5));
         }else{
-            console.log('false ' +   første.skalarProdukt(anden).toFixed(5));
+            console.log('false ' + første.skalarProdukt(anden).toFixed(5));
         }
     }
 

@@ -1,22 +1,27 @@
 function setup(){
     createCanvas(400, 400);
-    getBoxes();
+    getBoxes(childBoxArr);
 }
 
 let v1;
 let box1;
 
 let boxNum = 50;
+let childBoxNum = 10;
 
 let boxArr = [];
+let childBoxArr =[];
 let vArr = [];
 
 function draw(){
     background('black');
-    spawnBoxes();
-    randomV(boxArr);
+    //move
+    randomV(boxArr, vArr);
+    //show
+    spawnBoxes(childBoxArr);
     coherenceBias(boxArr, vArr);
     borderControl();
+    segregation(boxArr, vArr)
 }
 
 class Boxes{
@@ -27,42 +32,66 @@ class Boxes{
         this.w = 5;
         this.h = 5;
     }
+    
+    normalize(box, vek){
+        return (1/Math.hypot(this.x, vek.y)) * this.x, (1/Math.hypot(this.x, vek.y) * this.y);
+    }
+
+    addV(vek){
+        this.x = vek.x;
+        this.y = vek.y;
+    }
 
     show(){
+        fill(this.c)
         rect(this.x, this.y, this.w, this.h);
     }
 }
+
+class ParentBox extends Boxes{
+
+}
+
+class ChildBox extends Boxes{
+    followParent(){
+
+    }
+}
+
 
 class Vektor{
     constructor(x, y){
         this.x = x;
         this.y = y;
     }
-
-    addV(box){
-        box.x += this.x;
-        box.y += this.y;
-    }
 }
 
-function getBoxes(){
+function getBoxes(child){
     for(let i = 0; i != boxNum; i ++){
-        boxArr.push(new Boxes(random(50, 350), random(50, 350), 'white'));
+        boxArr.push(new ParentBox(random(50, 350), random(50, 350), 'blue'));
+    }
+
+    for(let i = 0; i != childBoxNum; i++){
+        child.push(new ChildBox(random(50, 350), random(50, 350), 'red'))
     }
 }
 
 
-function spawnBoxes(){
+function spawnBoxes(child){
     for(let i = 0; i != boxNum; i ++){
         boxArr[i].show();
     }
 
+    for(let i = 0; i != childBoxNum; i++){
+        child[i].show();
+    }
+
 }
 
-function randomV(boxes){
+function randomV(boxes, vek){
     for(let i = 0; i != boxes.length; i ++){
-        vArr.push(new Vektor(random(-1, 1), random(-1, 1)));
-        vArr[i].addV(boxes[i]);
+        vek.push(new Vektor(random(-1, 1), random(-1, 1)));
+        boxes[i].addV(vek[i]);
     }
 }
 
@@ -78,7 +107,7 @@ function coherenceBias(boxes, vektor){
         for(let e = 0; e != boxes.length; e++){
             if(i == e){
                 continue;
-            }else if(Math.hypot((boxes[i].x - boxes[e].x), (boxes[i].y - boxes[e].y)) < 20){
+            }else if(Math.hypot((boxes[i].x - boxes[e].x), (boxes[i].y - boxes[e].y)) < 30){
                 coArr.push(vektor[e]);
             }
         }
