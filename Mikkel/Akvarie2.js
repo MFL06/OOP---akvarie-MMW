@@ -19,8 +19,8 @@ function draw(){
 
     //Boids algorithm stuff
     coherenceBias(boxArr);
-    borderControl();
-    //segregation(boxArr)
+    borderControl(boxArr);
+    segregation(boxArr)
 
 
     //show boxes
@@ -51,6 +51,10 @@ class Boxes{
     addV(vek){
         this.x += vek.x;
         this.y += vek.y;
+    }
+
+    distance(other){
+        return Math.hypot(this.x - other.x, this.y - other.y);
     }
 }
 
@@ -96,12 +100,17 @@ class Vektor{
     }
 
     normalize(){
-        return new Vektor((1 / Math.hypot(this.x, this.y)) * (this.x), (1/Math.hypot(this.x, this.y) * (this.y)));
+        return new Vektor((1 / Math.hypot(this.x, this.y)) * this.x, (1/Math.hypot(this.x, this.y) * this.y));
     }
 
     addV(vek){
-        this.x + vek.x;
-        this.y + vek.y;
+        return new Vektor(this.x + vek.x, this.y + vek.y)
+    }
+
+    makeSmaller(){
+        this.x /= 20;
+        this.y /= 20;
+        return
     }
 }
 
@@ -145,36 +154,25 @@ function coherenceBias(boxes){
     let coArr = [];
     let vekSumX = 0;
     let vekSumY = 0;
-    let avgVX;
-    let avgVY;
-
 
     for(let i = 0; i != boxes.length; i++){
         for(let e = 0; e != boxes.length; e++){
-            if(i == e){
-                continue;
-            }else if(Math.hypot((boxes[i].x - boxes[e].x), (boxes[i].y - boxes[e].y)) < 30){
+            if(boxes[i].distance(boxes[e]) < 30){
                 coArr.push(boxes[e].vek);
             }
         }
+
         if(coArr.length >= 1){
             for(let e = 0; e < coArr.length; e ++){
                 vekSumX += coArr[e].x;
                 vekSumY += coArr[e].y;
             }
-            avgVX = vekSumX/coArr.length;
-            avgVY = vekSumY/coArr.length;
             
-            let coVec = new CoherenceVektor(avgVX * 1000, avgVY * 1000);
-
-            if(coVec = boxes[i].vek){
-                console.log('error')
-            }
-            
-            console.log(coArr);
-            console.log(coVec);
-            boxes[i].vek = coVec.normalize();
-            //console.log(boxes[0].vek)
+            let coVec = new CoherenceVektor(vekSumX / coArr.length, vekSumY / coArr.length);
+            coVec = coVec.normalize();
+            coVec.makeSmaller();
+           
+            boxes[i].vek = boxes[i].vek.normalize().addV(coVec);
         }
         vekSumX = 0;
         vekSumY = 0;
