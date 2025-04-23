@@ -21,27 +21,26 @@ function segregation(box){
 
 function borderControl(parent){
     for(let i = 0; i != parent.length; i++){
-        if(parent[i].x >= 350){
-            parent[i].vek = parent[i].vek.rotateRight(180);
+        if(parent[i].x >= 350 && parent[i].vek.x > 0.2){
+            parent[i].vek = parent[i].vek.rotate(1);
         }
     }
 
-
-
-
     for(let i = 0; i != parent.length; i++){
-        if(parent[i].x < 50 && parent[i].vek.x < 0.5){
-            parent[i].vek.x += Math.abs(parent[i].x) / 50;
+        if(parent[i].x < 50 && parent[i].vek.x < 0.2){
+            parent[i].vek = parent[i].vek.rotate(1);;
         }
     }
+
     for(let i = 0; i != parent.length; i++){
-        if(parent[i].y > 350 && parent[i].vek.y > -0.5){
-            parent[i].vek.y -= (50 - ((parent[i].y) - 350)) / 50;
+        if(parent[i].y > 350 && parent[i].vek.y > -0.2){
+            parent[i].vek = parent[i].vek.rotate(1);;
         }
     }
+
     for(let i = 0; i != parent.length; i++){
-        if(parent[i].y < 50 && parent[i].vek.y < 0.5){
-            parent[i].vek.y += Math.abs(parent[i].y) / 50;
+        if(parent[i].y < 50 && parent[i].vek.y < 0.2){
+            parent[i].vek = parent[i].vek.rotate(1);;
         }
     }
 }

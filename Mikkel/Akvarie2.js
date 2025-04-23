@@ -1,5 +1,5 @@
 function setup(){
-    createCanvas(400, 400);
+    createCanvas(800, 800);
     //generate boxes and vektors
     getBoxes(childBoxArr, boxArr);
 }
@@ -13,15 +13,16 @@ let proximityArr = [];
 
 function draw(){
     background('black');
-    
+    stroke('white')
+    line(0, 350, 350, 350);
+    line(350, 0, 350, 350);
     //move
     moveBoxes(boxArr);
 
     //Boids algorithm stuff
-    borderControl(boxArr);
     coherenceBias(boxArr);
     segregation(boxArr)
-
+    borderControl(boxArr);
     //show boxes
     spawnBoxes(childBoxArr, boxArr);
 
@@ -40,7 +41,11 @@ class Boxes{
 
     show(){
         fill(this.c);
+        stroke('black')
         rect(this.x, this.y, this.w, this.h);
+        stroke('white')
+        console.log(this.vek.x);
+        line(this.x, this.y, (this.x + this.vek.x * 10), (this.y + this.vek.y * 10))
     }
 
     addV(vek){
@@ -108,12 +113,18 @@ class Vektor{
         return
     }
 
-    rotateRight(deg){
-        let degree = deg * (Math.PI/180);
-        return new Vektor(this.x * cos(degree), this.y * sin(degree));
+    rotate(deg){
+        let degree = deg / (Math.PI/180);
+        if(Math.atan2(this.x, this.y) < 0){
+            let a = Math.atan2(this.x, this.y);
+            return new Vektor(this.x * cos(degree + a) - this.y * sin(degree + a), this.x * sin(degree + a) + this.y * cos(degree + a));
+        }else if(Math.atan2(this.x, this.y) > 0){
+            let a = Math.atan2(this.x, this.y);
+            return new Vektor(this.x * (-cos(degree + a)) - this.y * (-sin(degree + a)), this.x * (-sin(degree + a)) + this.y * (-cos(degree + a)));;
+        }
     }
 
-    rotateLeft(deg){
+    rotateRigth(deg){
 
     }
 }
@@ -142,7 +153,7 @@ function spawnBoxes(child, parent){
     }
 
     for(let i = 0; i != child.length; i++){
-        child[i].show();
+        //child[i].show();
     }
 
 
