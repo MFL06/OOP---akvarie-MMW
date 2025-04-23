@@ -2,7 +2,6 @@ function setup(){
     createCanvas(400, 400);
     //generate boxes and vektors
     getBoxes(childBoxArr, boxArr);
-    randomV(boxArr, vArr);
 }
 
 let boxNum = 50;
@@ -10,24 +9,28 @@ let childBoxNum = 10;
 
 let boxArr = [];
 let childBoxArr = [];
-let vArr = [];
 let proximityArr = [];
 
 function draw(){
     background('black');
     
     //move
-    moveBoxes(boxArr, vArr);
+    moveBoxes(boxArr);
+
+    //Boids algorithm stuff
+    coherenceBias(boxArr);
+    borderControl();
+    //segregation(boxArr)
+
+
     //show boxes
     spawnBoxes(childBoxArr, boxArr);
-    //Boids algorithm stuff
-    coherenceBias(boxArr, vArr);
-    borderControl();
-    segregation(boxArr, vArr)
-
+/*
     for(let i = 0; i < childBoxArr.length; i++){
-        childBoxArr[i].followParent(boxArr, vArr, childBoxArr[i]);
+        childBoxArr[i].followParent(boxArr, childBoxArr[i]);
     }
+*/
+    
 }
 
 class Boxes{
@@ -37,6 +40,7 @@ class Boxes{
         this.c = c
         this.w = 5;
         this.h = 5;
+        this.vek = new Vektor(random(-1, 1), random(-1, 1));
     }
 
     show(){
@@ -61,10 +65,10 @@ class ChildBox extends Boxes{
         super(x, y, c);
     }
 
-    followParent(box, vek, child){
+    followParent(box, child){
         for(let i = 0; i < boxNum; i++){
             if(Math.hypot(this.x - box[i].x, this.y - box[i].y) < 10){
-                proximityArr.push(vek[i]);
+                proximityArr.push(box[i].vek);
             }
         }
         for(let i = 0; i < proximityArr.length; i++){
@@ -94,6 +98,11 @@ class Vektor{
     normalize(){
         return new Vektor((1 / Math.hypot(this.x, this.y)) * (this.x), (1/Math.hypot(this.x, this.y) * (this.y)));
     }
+
+    addV(vek){
+        this.x + vek.x;
+        this.y + vek.y;
+    }
 }
 
 class CoherenceVektor extends Vektor{
@@ -104,11 +113,11 @@ class CoherenceVektor extends Vektor{
 
 
 function getBoxes(child, parent){
-    for(let i = 0; i != boxNum; i ++){
+    for(let i = 0; i < boxNum; i ++){
         parent.push(new ParentBox(random(50, 350), random(50, 350), 'blue'));
     }
 
-    for(let i = 0; i != childBoxNum; i++){
+    for(let i = 0; i < childBoxNum; i++){
         child.push(new ChildBox(random(50, 350), random(50, 350), 'red'))
     }
 }
@@ -123,21 +132,16 @@ function spawnBoxes(child, parent){
         child[i].show();
     }
 
+
 }
 
-function randomV(boxes, vek){
-    for(let i = 0; i != boxes.length; i ++){
-        vek.push(new Vektor(random(-1, 1), random(-1, 1)));
+function moveBoxes(boxes){
+    for(let i = 0; i < boxNum; i++){
+        boxes[i].addV(boxes[i].vek.normalize());
     }
 }
 
-function moveBoxes(boxes, vek){
-    for(let i = 0; i != boxNum; i++){
-        boxes[i].addV(vek[i].normalize());
-    }
-}
-
-function coherenceBias(boxes, vektor){
+function coherenceBias(boxes){
     let coArr = [];
     let vekSumX = 0;
     let vekSumY = 0;
@@ -150,30 +154,27 @@ function coherenceBias(boxes, vektor){
             if(i == e){
                 continue;
             }else if(Math.hypot((boxes[i].x - boxes[e].x), (boxes[i].y - boxes[e].y)) < 30){
-                coArr.push(vektor[e]);
+                coArr.push(boxes[e].vek);
             }
         }
         if(coArr.length >= 1){
-            for(let e = 0; e != coArr.length; e ++){
+            for(let e = 0; e < coArr.length; e ++){
                 vekSumX += coArr[e].x;
                 vekSumY += coArr[e].y;
             }
             avgVX = vekSumX/coArr.length;
             avgVY = vekSumY/coArr.length;
-            if(avgVX > 1 || avgVX < -1){
-                //console.log(avgVX);
-            }else if(avgVY > 1 || avgVY < -1){
-                //console.log(avgVY);
-            }
             
-            let coVec = new CoherenceVektor((avgVX * 200)/100, (avgVY * 200)/100);
-            
-            boxes[i].addV(coVec.normalize());
+            let coVec = new CoherenceVektor(avgVX * 1000, avgVY * 1000);
 
-            if(vektor[i] == proximityArr[0]){
-                child.addV(coVec.normalize())
+            if(coVec = boxes[i].vek){
+                console.log('error')
             }
             
+            console.log(coArr);
+            console.log(coVec);
+            boxes[i].vek = coVec.normalize();
+            //console.log(boxes[0].vek)
         }
         vekSumX = 0;
         vekSumY = 0;
