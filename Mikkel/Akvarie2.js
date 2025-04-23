@@ -18,18 +18,13 @@ function draw(){
     moveBoxes(boxArr);
 
     //Boids algorithm stuff
-    coherenceBias(boxArr);
     borderControl(boxArr);
+    coherenceBias(boxArr);
     segregation(boxArr)
-
 
     //show boxes
     spawnBoxes(childBoxArr, boxArr);
-/*
-    for(let i = 0; i < childBoxArr.length; i++){
-        childBoxArr[i].followParent(boxArr, childBoxArr[i]);
-    }
-*/
+
     
 }
 
@@ -111,6 +106,15 @@ class Vektor{
         this.x /= 20;
         this.y /= 20;
         return
+    }
+
+    rotateRight(deg){
+        let degree = deg * (Math.PI/180);
+        return new Vektor(this.x * cos(degree), this.y * sin(degree));
+    }
+
+    rotateLeft(deg){
+
     }
 }
 

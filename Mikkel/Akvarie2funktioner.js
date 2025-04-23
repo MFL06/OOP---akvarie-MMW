@@ -1,27 +1,3 @@
-function borderControl(parent){
-    //Ærlig ... bare ikke pil' med det nu!
-    for(let i = 0; i != parent.length; i++){
-        if(parent[i].x > 350 && parent[i].vek.x > -0.5){
-            parent[i].vek.x -= (50 - ((parent[i].x) - 350)) / 50;
-        }
-    }
-    for(let i = 0; i != parent.length; i++){
-        if(parent[i].x < 50 && parent[i].vek.x < 0.5){
-            parent[i].vek.x += Math.abs(parent[i].x) / 50;
-        }
-    }
-    for(let i = 0; i != parent.length; i++){
-        if(parent[i].y > 350 && parent[i].vek.y > -0.5){
-            parent[i].vek.y -= (50 - ((parent[i].y) - 350)) / 50;
-        }
-    }
-    for(let i = 0; i != parent.length; i++){
-        if(parent[i].y < 50 && parent[i].vek.y < 0.5){
-            parent[i].vek.y += Math.abs(parent[i].y) / 50;
-        }
-    }
-}
-
 function segregation(box){
     for(let i = 0; i != box.length; i++){
         for(let e = 0; e =! box.length; e++){
@@ -42,3 +18,38 @@ function segregation(box){
         }
     }
 }
+
+function borderControl(parent){
+    for(let i = 0; i != parent.length; i++){
+        if(parent[i].x >= 350){
+            parent[i].vek = parent[i].vek.rotateRight(180);
+        }
+    }
+
+
+
+
+    for(let i = 0; i != parent.length; i++){
+        if(parent[i].x < 50 && parent[i].vek.x < 0.5){
+            parent[i].vek.x += Math.abs(parent[i].x) / 50;
+        }
+    }
+    for(let i = 0; i != parent.length; i++){
+        if(parent[i].y > 350 && parent[i].vek.y > -0.5){
+            parent[i].vek.y -= (50 - ((parent[i].y) - 350)) / 50;
+        }
+    }
+    for(let i = 0; i != parent.length; i++){
+        if(parent[i].y < 50 && parent[i].vek.y < 0.5){
+            parent[i].vek.y += Math.abs(parent[i].y) / 50;
+        }
+    }
+}
+
+
+
+
+
+
+
+
