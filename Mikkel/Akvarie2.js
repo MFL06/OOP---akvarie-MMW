@@ -2,7 +2,11 @@ function setup(){
     createCanvas(800, 800);
     //generate boxes and vektors
     getBoxes(childBoxArr, boxArr);
+    test = new Vektor(1, 1);
+    console.log((test.getAngle()))
 }
+
+let test;
 
 let boxNum = 50;
 let childBoxNum = 10;
@@ -13,20 +17,26 @@ let proximityArr = [];
 
 function draw(){
     background('black');
+
+    line(200, 200, 200, 100)
+
+
     stroke('white')
-    line(0, 350, 350, 350);
-    line(350, 0, 350, 350);
+    line(50, 350, 350, 350);
+    line(350, 50, 350, 350);
+
+    line(50, 50, 50, 350)
+    line(50, 50, 350, 50)
+    //line(0, )
     //move
     moveBoxes(boxArr);
 
     //Boids algorithm stuff
-    coherenceBias(boxArr);
-    segregation(boxArr)
+    //coherenceBias(boxArr);
+    //segregation(boxArr)
     borderControl(boxArr);
     //show boxes
     spawnBoxes(childBoxArr, boxArr);
-
-    
 }
 
 class Boxes{
@@ -44,7 +54,6 @@ class Boxes{
         stroke('black')
         rect(this.x, this.y, this.w, this.h);
         stroke('white')
-        console.log(this.vek.x);
         line(this.x, this.y, (this.x + this.vek.x * 10), (this.y + this.vek.y * 10))
     }
 
@@ -113,19 +122,18 @@ class Vektor{
         return
     }
 
-    rotate(deg){
-        let degree = deg / (Math.PI/180);
-        if(Math.atan2(this.x, this.y) < 0){
-            let a = Math.atan2(this.x, this.y);
-            return new Vektor(this.x * cos(degree + a) - this.y * sin(degree + a), this.x * sin(degree + a) + this.y * cos(degree + a));
-        }else if(Math.atan2(this.x, this.y) > 0){
-            let a = Math.atan2(this.x, this.y);
-            return new Vektor(this.x * (-cos(degree + a)) - this.y * (-sin(degree + a)), this.x * (-sin(degree + a)) + this.y * (-cos(degree + a)));;
-        }
+    rotateLeft(deg){
+        let degree = deg * (Math.PI/180);
+        return new Vektor(this.x * cos(degree) - this.y * sin(degree), this.x * sin(degree) + this.y * cos(degree));
     }
 
-    rotateRigth(deg){
+    rotateRight(deg){
+        let degree = deg * (Math.PI/180);
+        return new Vektor(this.x * cos(-degree) - this.y * sin(-degree), this.x * sin(-degree) + this.y * cos(-degree));
+    }
 
+    getAngle(){
+        return Math.atan2(this.x, this.y) / (Math.PI / 180);
     }
 }
 
