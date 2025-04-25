@@ -19,51 +19,58 @@ function segregation(box){
     }
 }
 
+let angle = 1;
+let coef;
+
+
+//Gør vinkler positive
+//Lav 'else' i stedet for 'if'
+
 function borderControl(parent){
     for(let i = 0; i != parent.length; i++){
         if(parent[i].x >= 350){
-            if(parent[i].vek.getAngle() > 90 && parent[i].vek.getAngle() < 180){
-                parent[i].vek = parent[i].vek.rotateRight(20);
+            if(parent[i].vek.getAngle() >= 90 && parent[i].vek.getAngle() <= 180){
+                parent[i].vek = parent[i].vek.rotateRight(angle + parent[i].borderCoef());
             }
 
-            if(parent[i].vek.getAngle() > 0 && parent[i].vek.getAngle() < 90){
-                parent[i].vek = parent[i].vek.rotateLeft(20);
+            if(parent[i].vek.getAngle() >= 0 && parent[i].vek.getAngle() < 90){
+                parent[i].vek = parent[i].vek.rotateLeft(angle + parent[i].borderCoef());
             }
         }
     }
 
     for(let i = 0; i != parent.length; i++){
         if(parent[i].x < 50){
-            if(parent[i].vek.getAngle() < -90 && parent[i].vek.getAngle() > -180){
-                parent[i].vek = parent[i].vek.rotateLeft(20);
+            if(parent[i].vek.getAngle() <= -90 && parent[i].vek.getAngle() >= -180){
+                parent[i].vek = parent[i].vek.rotateLeft(angle + parent[i].borderCoef());
             }
 
-            if(parent[i].vek.getAngle() < 0 && parent[i].vek.getAngle() > -90){
-                parent[i].vek = parent[i].vek.rotateRight(20);
+            if(parent[i].vek.getAngle() <= 0 && parent[i].vek.getAngle() > -90){
+                parent[i].vek = parent[i].vek.rotateRight(angle + parent[i].borderCoef());
             }
         }
     }
     // Fix this stuff now
     for(let i = 0; i != parent.length; i++){
         if(parent[i].y > 350){
-            if(parent[i].vek.getAngle() < 0 && parent[i].vek.getAngle() > -90){
-                parent[i].vek = parent[i].vek.rotateLeft(20);
+            if(parent[i].vek.getAngle() <= 0 && parent[i].vek.getAngle() >= -90){
+                parent[i].vek = parent[i].vek.rotateLeft(angle + parent[i].borderCoef());
             }
 
-            if(parent[i].vek.getAngle() < 90 && parent[i].vek.getAngle() > 0){
-                parent[i].vek = parent[i].vek.rotateRight(20);
+            if(parent[i].vek.getAngle() <= 90 && parent[i].vek.getAngle() > 0){
+                parent[i].vek = parent[i].vek.rotateRight(angle + parent[i].borderCoef());
             }
         }
     }
 
     for(let i = 0; i != parent.length; i++){
         if(parent[i].y < 50){
-            if(parent[i].vek.getAngle() < 180 && parent[i].vek.getAngle() > 90){
-                parent[i].vek = parent[i].vek.rotateLeft(20);
+            if(parent[i].vek.getAngle() <= 180 && parent[i].vek.getAngle() >= 90){
+                parent[i].vek = parent[i].vek.rotateLeft(angle + parent[i].borderCoef());
             }
 
-            if(parent[i].vek.getAngle() < -90 && parent[i].vek.getAngle() < 0){
-                parent[i].vek = parent[i].vek.rotateRight(20);
+            if(parent[i].vek.getAngle() < -90 && parent[i].vek.getAngle() <= 0){
+                parent[i].vek = parent[i].vek.rotateRight(angle + parent[i].borderCoef());
             }
         }
     }

@@ -1,8 +1,8 @@
 function setup(){
-    createCanvas(800, 800);
+    createCanvas(400, 400);
     //generate boxes and vektors
     getBoxes(childBoxArr, boxArr);
-    test = new Vektor(1, 1);
+    test = new Vektor(1, -1);
     console.log((test.getAngle()))
 }
 
@@ -17,8 +17,6 @@ let proximityArr = [];
 
 function draw(){
     background('black');
-
-    line(200, 200, 200, 100)
 
 
     stroke('white')
@@ -65,6 +63,45 @@ class Boxes{
     distance(other){
         return Math.hypot(this.x - other.x, this.y - other.y);
     }
+
+    borderdistance(){
+        if(this.x > 350){
+            let distance = Math.hypot(this.x - 350, this.y);
+            return distance;
+        }
+
+        if(this.x < 50){
+            let distance
+            if(this.x < 0){
+                distance = Math.hypot(this.x * -1 + 50, this.y)
+            }else{
+                distance = Math.hypot(50 - this.x, this.y)
+            }
+            return distance;
+        }
+
+        if(this.y > 350){
+            if(this.y >= 350){
+                let distance = Math.hypot(this.x, this.y - 350);
+                return distance;
+            }
+        }
+
+        if(this.y < 50){
+            let distance
+            if(this.y < 0){
+                distance = Math.hypot(this.x, this.y * -1 + 50)
+            }else{
+                distance = Math.hypot(this.x, 50 - this.y)
+            }
+            return distance;
+        }
+    }
+
+    borderCoef(){
+        return this.borderdistance() * 0.02;
+    }
+
 }
 
 class ParentBox extends Boxes{
