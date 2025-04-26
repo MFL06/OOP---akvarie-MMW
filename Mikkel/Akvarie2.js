@@ -2,7 +2,7 @@ function setup(){
     createCanvas(400, 400);
     //generate boxes and vektors
     getBoxes(childBoxArr, boxArr);
-    test = new Vektor(1, -1);
+    test = new Vektor(0, 1);
     console.log((test.getAngle()))
 }
 
@@ -170,7 +170,7 @@ class Vektor{
     }
 
     getAngle(){
-        return Math.atan2(this.x, this.y) / (Math.PI / 180);
+        return Math.abs(Math.atan2(this.x, this.y) / (Math.PI / 180));
     }
 }
 

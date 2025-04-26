@@ -25,6 +25,7 @@ let coef;
 
 //Gør vinkler positive
 //Lav 'else' i stedet for 'if'
+//Lav alt i radianer nu
 
 function borderControl(parent){
     for(let i = 0; i != parent.length; i++){
@@ -41,11 +42,11 @@ function borderControl(parent){
 
     for(let i = 0; i != parent.length; i++){
         if(parent[i].x < 50){
-            if(parent[i].vek.getAngle() <= -90 && parent[i].vek.getAngle() >= -180){
+            if(parent[i].vek.getAngle() <= 90 && parent[i].vek.getAngle() <= 180){
                 parent[i].vek = parent[i].vek.rotateLeft(angle + parent[i].borderCoef());
             }
 
-            if(parent[i].vek.getAngle() <= 0 && parent[i].vek.getAngle() > -90){
+            if(parent[i].vek.getAngle() >= 0 && parent[i].vek.getAngle() < 90){
                 parent[i].vek = parent[i].vek.rotateRight(angle + parent[i].borderCoef());
             }
         }
@@ -53,7 +54,7 @@ function borderControl(parent){
     // Fix this stuff now
     for(let i = 0; i != parent.length; i++){
         if(parent[i].y > 350){
-            if(parent[i].vek.getAngle() <= 0 && parent[i].vek.getAngle() >= -90){
+            if(parent[i].vek.getAngle() <= 0 && parent[i].vek.getAngle() >= 90){
                 parent[i].vek = parent[i].vek.rotateLeft(angle + parent[i].borderCoef());
             }
 
@@ -69,7 +70,7 @@ function borderControl(parent){
                 parent[i].vek = parent[i].vek.rotateLeft(angle + parent[i].borderCoef());
             }
 
-            if(parent[i].vek.getAngle() < -90 && parent[i].vek.getAngle() <= 0){
+            if(parent[i].vek.getAngle() < 90 && parent[i].vek.getAngle() <= 0){
                 parent[i].vek = parent[i].vek.rotateRight(angle + parent[i].borderCoef());
             }
         }
