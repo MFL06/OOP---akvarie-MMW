@@ -7,6 +7,7 @@ function draw(){
     background(200);
     showFish(fishArr);
     moveFish(fishArr);
+    rotateFish(fishArr);
 }
 
 
@@ -35,6 +36,15 @@ class Fish{
         this.vek = this.vek.normalize();
         this.x += this.vek.x;
         this.y += this.vek.y;
+    }
+
+    rotateRight(){
+        this.vek.x = cos(0.1)*this.vek.x - sin(0.1)*this.vek.y;
+        this.vek.y = sin(0.1)*this.vek.x + sin(0.1)*this.vek.y;
+    }
+
+    rotateLeft(){
+
     }
 }
 
