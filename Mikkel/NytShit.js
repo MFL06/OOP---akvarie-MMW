@@ -1,14 +1,21 @@
 function setup(){
     createCanvas(400, 400);
+    getFish(fishArr);
 }
 
 function draw(){
     background(200);
+    showFish(fishArr);
+    moveFish(fishArr);
 }
 
-let fishies;
-let c;
 
+// Variable
+let fishNumber = 30;
+let fishArr = [];
+
+
+// ParentClass fish
 class Fish{
     constructor(x, y, c){
         this.x = x;
@@ -22,6 +29,24 @@ class Fish{
         fill(this.c);
         stroke(this.c);
         circle(this.x, this.y, this.r);
+    }
+
+    addVek(){
+        this.vek = this.vek.normalize();
+        this.x += this.vek.x;
+        this.y += this.vek.y;
+    }
+}
+
+class RedFish extends Fish{
+    constructor(x, y, c){
+        super(x, y, c);
+    }
+}
+
+class BlueFish extends Fish{
+    constructor(x, y, c){
+        super(x, y, c);
     }
 }
 
