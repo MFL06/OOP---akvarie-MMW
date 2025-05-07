@@ -15,6 +15,8 @@ function draw(){
 let fishNumber = 30;
 let fishArr = [];
 
+let radians = Math.PI/100
+
 
 // ParentClass fish
 class Fish{
@@ -39,8 +41,8 @@ class Fish{
     }
 
     rotateRight(){
-        this.vek.x = cos(0.1)*this.vek.x - sin(0.1)*this.vek.y;
-        this.vek.y = sin(0.1)*this.vek.x + sin(0.1)*this.vek.y;
+        this.vek.x = cos(radians)*this.vek.x - sin(radians)*this.vek.y;
+        this.vek.y = sin(radians)*this.vek.x + cos(radians)*this.vek.y;
     }
 
     rotateLeft(){
