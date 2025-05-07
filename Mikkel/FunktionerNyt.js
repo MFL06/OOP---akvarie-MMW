@@ -29,7 +29,6 @@ function borderControl(fish){
     for(let i = 0; i < fish.length; i++){
         if(fish[i].x <= 50 || fish[i].x >= 350){
             if(shouldRigth(fish[i]) == true){
-                console.log('det virker tror jeg')
                 fish[i].rotateRight(radians + borderCoef(fish[i]));
             }else{
                 fish[i].rotateLeft(radians + borderCoef(fish[i]));
@@ -66,29 +65,30 @@ function borderCoef(fish){
 
 function shouldRigth(fish){
     if(fish.x > 350){
-        if(fish.getAngle() >= 0 && fish.getAngle() <= Math.PI/2){
-            console.log(fish.getAngle())
+        if(fish.getAngle() <= 0){
             return false;
         }else{
             return true;
         }
     }else if(fish.x < 50){
-        if(fish.getAngle() >= 3*Math.PI/2 && fish.getAngle() <= Math.PI*2){
-            return false;
-        }else{
+        if(fish.getAngle() < 0){
             return true;
+        }else{
+            return false;
         }
-    }else if(fish.y > 350){
-        if(fish.getAngle() < Math.PI/2){
-            return false;
-        }else{
+    }
+    
+    if(fish.y > 350){
+        if(fish.getAngle() > HALF_PI){
             return true;
+        }else{
+            return false;
         }
     }else if(fish.y < 50){
-        if(fish.getAngle() > Math.PI/2 && fish.getAngle() < Math.PI){
-            return false;
-        }else{
+        if(fish.getAngle() >= -HALF_PI  || fish.getAngle() >= 3*HALF_PI){
             return true;
+        }else if(fish.getAngle() <= HALF_PI || fish.getAngle() >= Math.PI){
+            return false;
         }
     }
 }

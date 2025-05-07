@@ -1,7 +1,8 @@
 function setup(){
     createCanvas(400, 400);
     getFish(fishArr);
-    console.log(Math.atan2(0,1))
+    console.log(Math.atan2(-1,0))
+    console.log(-HALF_PI)
 }
 
 function draw(){
@@ -46,15 +47,13 @@ class Fish{
         this.vek.y = sin(ang)*this.vek.x + cos(ang)*this.vek.y;
     }
 
-    rotateLeft(){
+    rotateLeft(ang){
         this.vek.x = cos(-ang)*this.vek.x - sin(-ang)*this.vek.y;
         this.vek.y = sin(-ang)*this.vek.x + cos(-ang)*this.vek.y;
     }
 
     getAngle(){
-        let angle;
-        angle = Math.atan2((this.vek.y, this.vek.x));
-        return angle;
+        return Math.atan2(this.vek.y, this.vek.x);
     }
 }
 
