@@ -55,6 +55,10 @@ class Fish{
     getAngle(){
         return Math.abs(Math.atan2(this.vek.y, this.vek.x));
     }
+
+    getDistance(other){
+        return Math.hypot(Math.hypot(this.x - other.x, this.y - other.y))
+    }
 }
 
 class RedFish extends Fish{
