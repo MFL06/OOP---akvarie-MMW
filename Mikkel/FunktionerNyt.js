@@ -49,29 +49,29 @@ function borderCoef(fish){
     let lengthPast;
     if(fish.x > 350){
         lengthPast = fish.x - 350;
-        coef = lengthPast * 0.001;
+        coef = lengthPast * 0.004;
     }else if(fish.x < 50){
         lengthPast = 50 - fish.x;
-        coef = lengthPast * 0.001;
+        coef = lengthPast * 0.004;
     }else if(fish.y > 350){
         lengthPast = fish.y - 350;
-        coef = lengthPast * 0.001;
+        coef = lengthPast * 0.004;
     }else if(fish.y < 50){
         lengthPast = 50 - fish.y;
-        coef = lengthPast * 0.001;
+        coef = lengthPast * 0.004;
     }
     return coef;
 }
 
 function shouldRigth(fish){
     if(fish.x > 350){
-        if(fish.getAngle() <= 0){
-            return false;
-        }else{
+        if(fish.vek.y >= 0){
             return true;
+        }else{
+            return false;
         }
     }else if(fish.x < 50){
-        if(fish.getAngle() < 0){
+        if(fish.vek.y <= 0){
             return true;
         }else{
             return false;
@@ -79,15 +79,15 @@ function shouldRigth(fish){
     }
     
     if(fish.y > 350){
-        if(fish.getAngle() > HALF_PI){
+        if(fish.vek.x <= 0){
             return true;
         }else{
             return false;
         }
     }else if(fish.y < 50){
-        if(fish.getAngle() >= -HALF_PI  || fish.getAngle() >= 3*HALF_PI){
+        if(fish.vek.x >= 0){
             return true;
-        }else if(fish.getAngle() <= HALF_PI || fish.getAngle() >= Math.PI){
+        }else{
             return false;
         }
     }

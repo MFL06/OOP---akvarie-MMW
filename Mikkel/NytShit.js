@@ -1,7 +1,7 @@
 function setup(){
     createCanvas(400, 400);
     getFish(fishArr);
-    console.log(Math.atan2(-1,0))
+    console.log(Math.abs(Math.atan2(-1,-1)))
     console.log(-HALF_PI)
 }
 
@@ -53,7 +53,7 @@ class Fish{
     }
 
     getAngle(){
-        return Math.atan2(this.vek.y, this.vek.x);
+        return Math.abs(Math.atan2(this.vek.y, this.vek.x));
     }
 }
 
