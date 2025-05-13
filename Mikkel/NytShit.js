@@ -10,7 +10,7 @@ function draw(){
     showFish(fishArr);
     moveFish(fishArr);
     borderControl(fishArr);
-    cohesion(fishArr);
+    alignment(fishArr);
 }
 
 
@@ -86,5 +86,12 @@ class Vektor{
 
     dotProd(other){
         return this.x * other.x + this.y * other.y;
+    }
+
+    turnNinety(){
+        let x = cos(90 * Math.PI/180)*this.x - sin(90 * Math.PI/180)*this.y;
+        let y = sin(90 * Math.PI/180)*this.x + cos(90 * Math.PI/180)*this.y;
+        
+        return new Vektor(x, y);
     }
 }

@@ -93,8 +93,8 @@ function shouldRigth(fish){
     }
 }
 
-function cohesion(fish){
-    let grader = 0.01
+function alignment(fish){
+    let grader = 0.003
     let coArr = [];
     for(let i = 0; i < fish.length; i++){
         for(let e = 0; e < fish.length; e++){
@@ -104,7 +104,7 @@ function cohesion(fish){
                 coArr.push(fish[e]);
             }
         }
-        if(fish[i].vek.dotProd(getAvg(coArr)) < 0){
+        if(fish[i].vek.turnNinety().dotProd(getAvg(coArr)) < 0){
             fish[i].rotateLeft(grader)
         }else{
             fish[i].rotateRight(grader)
