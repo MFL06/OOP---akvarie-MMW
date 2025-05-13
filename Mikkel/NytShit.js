@@ -10,6 +10,7 @@ function draw(){
     showFish(fishArr);
     moveFish(fishArr);
     borderControl(fishArr);
+    cohesion(fishArr);
 }
 
 
@@ -57,7 +58,7 @@ class Fish{
     }
 
     getDistance(other){
-        return Math.hypot(Math.hypot(this.x - other.x, this.y - other.y))
+        return Math.hypot(this.x - other.x, this.y - other.y)
     }
 }
 
@@ -81,5 +82,9 @@ class Vektor{
 
     normalize(){
         return new Vektor((1 / Math.hypot(this.x, this.y)) * this.x, (1/Math.hypot(this.x, this.y) * this.y));
+    }
+
+    dotProd(other){
+        return this.x * other.x + this.y * other.y;
     }
 }

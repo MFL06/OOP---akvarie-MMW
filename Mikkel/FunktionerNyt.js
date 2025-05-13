@@ -92,3 +92,39 @@ function shouldRigth(fish){
         }
     }
 }
+
+function cohesion(fish){
+    let grader = 0.01
+    let coArr = [];
+    for(let i = 0; i < fish.length; i++){
+        for(let e = 0; e < fish.length; e++){
+            if(e == i){
+                continue;
+            }else if(fish[i].getDistance(fish[e]) >= 30){
+                coArr.push(fish[e]);
+            }
+        }
+        if(fish[i].vek.dotProd(getAvg(coArr)) < 0){
+            fish[i].rotateLeft(grader)
+        }else{
+            fish[i].rotateRight(grader)
+        }
+    }
+    // Dot product: fisk + 90 grader højre. Hvis dot produkt er positiv, så drej højre, negativ så venstre.
+    // the average of the list: getAvg(CoArr);
+}
+
+function moveTowards(){
+
+}
+
+function getAvg(list){
+    if(list.length >= 1){
+        for(let i = 1; i < 1; i++){
+            console.log(list[e])
+            list[0].vek.x = list[0].vek.x + list[i].vek.x;
+            list[0].vek.y = list[0].vek.y + list[i].vek.y;
+        }
+        return new Vektor(list[0].x, list[0].y);
+    }
+}
