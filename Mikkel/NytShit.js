@@ -1,8 +1,6 @@
 function setup(){
     createCanvas(400, 400);
     getFish(fishArr);
-    console.log(Math.abs(Math.atan2(-1,-1)))
-    console.log(-HALF_PI)
 }
 
 function draw(){
