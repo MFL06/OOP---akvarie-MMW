@@ -9,6 +9,7 @@ function draw(){
     moveFish(fishArr);
     borderControl(fishArr);
     alignment(fishArr);
+    cohesion(fishArr);
 }
 
 

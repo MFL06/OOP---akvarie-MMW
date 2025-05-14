@@ -94,13 +94,13 @@ function shouldRigth(fish){
 }
 
 function alignment(fish){
-    let grader = 0.003
+    let grader = 0.1;
     let coArr = [];
     for(let i = 0; i < fish.length; i++){
         for(let e = 0; e < fish.length; e++){
             if(e == i){
                 continue;
-            }else if(fish[i].getDistance(fish[e]) >= 40){
+            }else if(fish[i].getDistance(fish[e]) <= 30){
                 coArr.push(fish[e]);
             }
         }
@@ -122,21 +122,27 @@ function getAvg(list){
         }
         list[0].x = list[0].x / list.length
         list[0].y = list[0].y / list.length
-        return new Vektor(list[0].x, list[0].y);
+        let avgVek = new Vektor(list[0].x, list[0].y);
+        avgVek.normalize();
+        return avgVek;
     }
 }
 
-function cohesion(){
-    let grader = 0.003;
+function cohesion(fish){
+    let grader = 0.1;
     let coArr = [];
     for(let i = 0; i < fish.length; i++){
         for(let e = 0; e < fish.length; e++){
             if(e == i){
                 continue;
-            }else if(fish[i].getDistance(fish[e]) >= 30){
+            }else if(fish[i].getDistance(fish[e]) <= 30){
                 coArr.push(fish[e]);
             }
         }
-
+        if(fish[i].vek.turnNinety().dotProd(getAvg(coArr)) < 0){
+            fish[i].rotateRight(grader);
+        }else{
+            fish[i].rotateLeft(grader);
+        }
     }
 }
