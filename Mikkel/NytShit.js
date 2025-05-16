@@ -5,11 +5,12 @@ function setup(){
 
 function draw(){
     background(200);
-    showFish(fishArr);
     moveFish(fishArr);
+    showFish(fishArr);
     borderControl(fishArr);
     alignment(fishArr);
     cohesion(fishArr);
+    sepperation(fishArr);
 }
 
 
@@ -18,6 +19,10 @@ let fishNumber = 30;
 let fishArr = [];
 
 let radians = Math.PI/100;
+
+let coRad = Math.PI/150;
+let alRad = Math.PI/150;
+let sepRad = Math.PI/100;
 
 
 // ParentClass fish
@@ -28,12 +33,15 @@ class Fish{
         this.c = c;
         this.r = 5;
         this.vek = new Vektor(random(-1, 1), random(-1, 1));
+        this.bigR = 30;
     }
 
     show(){
         fill(this.c);
         stroke(this.c);
         circle(this.x, this.y, this.r);
+        /*noFill();
+        circle(this.x, this.y, this.bigR);*/
     }
 
     addVek(){
@@ -84,12 +92,12 @@ class Vektor{
     }
 
     dotProd(other){
-        return this.x * other.x + this.y * other.y;
+        return (this.x * other.x) + (this.y * other.y);
     }
 
     turnNinety(){
-        let x = cos(90 * Math.PI/180)*this.x - sin(90 * Math.PI/180)*this.y;
-        let y = sin(90 * Math.PI/180)*this.x + cos(90 * Math.PI/180)*this.y;
+        let x = cos(90 * (Math.PI/180))*this.x - sin(90 * (Math.PI/180))*this.y;
+        let y = sin(90 * (Math.PI/180))*this.x + cos(90 * (Math.PI/180))*this.y;
         
         return new Vektor(x, y);
     }

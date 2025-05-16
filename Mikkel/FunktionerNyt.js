@@ -49,16 +49,16 @@ function borderCoef(fish){
     let lengthPast;
     if(fish.x > 350){
         lengthPast = fish.x - 350;
-        coef = lengthPast * 0.004;
+        coef = lengthPast * 0.006;
     }else if(fish.x < 50){
         lengthPast = 50 - fish.x;
-        coef = lengthPast * 0.004;
+        coef = lengthPast * 0.006;
     }else if(fish.y > 350){
         lengthPast = fish.y - 350;
-        coef = lengthPast * 0.004;
+        coef = lengthPast * 0.006;
     }else if(fish.y < 50){
         lengthPast = 50 - fish.y;
-        coef = lengthPast * 0.004;
+        coef = lengthPast * 0.006;
     }
     return coef;
 }
@@ -94,55 +94,76 @@ function shouldRigth(fish){
 }
 
 function alignment(fish){
-    let grader = 0.1;
-    let coArr = [];
     for(let i = 0; i < fish.length; i++){
+        let coArr = [];
         for(let e = 0; e < fish.length; e++){
-            if(e == i){
-                continue;
-            }else if(fish[i].getDistance(fish[e]) <= 30){
+            if(fish[i].getDistance(fish[e]) <= 30){
                 coArr.push(fish[e]);
             }
         }
-        if(fish[i].vek.turnNinety().dotProd(getAvg(coArr)) < 0){
-            fish[i].rotateLeft(grader)
-        }else{ 
-            fish[i].rotateRight(grader)
+        if(coArr.length > 1){
+            let average = getAvg(coArr);
+            let ninetyVek = fish[i].vek.turnNinety();
+            if(ninetyVek.dotProd(average) < 0){
+                fish[i].rotateLeft(alRad)
+            }else{ 
+                fish[i].rotateRight(alRad)
+            }
         }
+        
     }
     // Dot product: fisk + 90 grader højre. Hvis dot produkt er positiv, så drej højre, negativ så venstre.
     // the average of the list: getAvg(CoArr);
 }
 
 function getAvg(list){
-    if(list.length >= 1){
-        for(let i = 1; i < list.length; i++){
-            list[0].vek.x = list[0].vek.x + list[i].vek.x;
-            list[0].vek.y = list[0].vek.y + list[i].vek.y;
-        }
-        list[0].x = list[0].x / list.length
-        list[0].y = list[0].y / list.length
-        let avgVek = new Vektor(list[0].x, list[0].y);
-        avgVek.normalize();
-        return avgVek;
+    let X;
+    let Y;
+    let avgX;
+    let avgY;
+    for(let i = 0; i < list.length; i++){
+        X =+ list[i].vek.x;
+        Y =+ list[i].vek.y;
     }
+    avgX = X / list.length;
+    avgY = Y / list.length;
+    let avgVek = new Vektor(avgX, avgY);
+    return avgVek.normalize();
 }
 
 function cohesion(fish){
-    let grader = 0.1;
+    let coArr = [];
+    for(let i = 0; i < fish.length; i++){
+        for(let e = 0; e < fish.length; e++){
+            if(fish[i].getDistance(fish[e]) <= 30){
+                coArr.push(fish[e]);
+            }
+        }
+        if(coArr.length > 1){
+            if(fish[i].vek.turnNinety().dotProd(getAvg(coArr)) < 0){
+                fish[i].rotateLeft(coRad);
+            }else{
+                fish[i].rotateRight(coRad);
+            }
+        }
+        
+    }
+}
+
+function sepperation(fish){
     let coArr = [];
     for(let i = 0; i < fish.length; i++){
         for(let e = 0; e < fish.length; e++){
             if(e == i){
                 continue;
-            }else if(fish[i].getDistance(fish[e]) <= 30){
+            }else if(fish[i].getDistance(fish[e]) <= 15){
                 coArr.push(fish[e]);
             }
         }
-        if(fish[i].vek.turnNinety().dotProd(getAvg(coArr)) < 0){
-            fish[i].rotateRight(grader);
+        if(fish[i].vek.turnNinety().dotProd(getAvg(coArr)) > 0){
+            fish[i].rotateLeft(sepRad);
         }else{
-            fish[i].rotateLeft(grader);
+            fish[i].rotateRight(sepRad);
         }
     }
 }
