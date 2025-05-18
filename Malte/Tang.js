@@ -3,7 +3,7 @@ let TangArray = [];//Array for tangen
 function setup() {
     createCanvas(600, 600);
     
-    for (let i = 0; i < 20; i++) {//Laver random tang
+    for (let i = 0; i < 35; i++) {//Laver random tang
         let pos = new Vector(random(width), height);
         TangArray.push(new Tang(pos));
     }
@@ -11,8 +11,13 @@ function setup() {
 
 function draw() {
     background("blue");
-    
-    
+
+    for (let y = 0; y < height; y += 20) {
+        stroke(0, 0, 100, 30);
+        strokeWeight(2);
+        let wave = sin(frameCount * 0.02 + y * 0.1) * 10;
+        line(0, y + wave, width, y + wave);
+    }
     for (let i = 0; i < TangArray.length; i++) {
         TangArray[i].show();
         
