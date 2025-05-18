@@ -4,7 +4,7 @@ function setup() {
     createCanvas(600, 600);
     
     for (let i = 0; i < 35; i++) {//Laver random tang
-        let pos = new Vector(random(width), height);
+        let pos = new Vector(random(width), height);//sætter dem i bunden af skærmen men tilfældig x koordinat
         TangArray.push(new Tang(pos));
     }
 }
@@ -12,10 +12,10 @@ function setup() {
 function draw() {
     background("blue");
 
-    for (let y = 0; y < height; y += 20) {
+    for (let y = 0; y < height; y += 20) {//for lykke der laver bølger i vandet
         stroke(0, 0, 100, 30);
         strokeWeight(2);
-        let wave = sin(frameCount * 0.02 + y * 0.1) * 10;
+        let wave = sin(frameCount * 0.02 + y * 0.1) * 10;//det samme som tangen bare som en linje istedet
         line(0, y + wave, width, y + wave);
     }
     for (let i = 0; i < TangArray.length; i++) {
@@ -31,7 +31,7 @@ class Vector {
         this.y = y;
     }
 
-    show(col, x0 = 0, y0 = 0) {
+    show(col, x0 = 0, y0 = 0) {//laver vektoreren som mest er til hvis man ville lave fisk, men pæn kode så det bliver
         fill(col);
         stroke(col);
         line(x0, y0, x0 + this.x, y0 + this.y);
