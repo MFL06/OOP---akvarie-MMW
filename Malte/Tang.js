@@ -3,8 +3,8 @@ let TangArray = [];//Array for tangen
 function setup() {
     createCanvas(600, 600);
     
-    for (let i = 0; i < 10; i++) {//Laver random tang
-        let pos = new Vector(random(width), random(height));
+    for (let i = 0; i < 20; i++) {//Laver random tang
+        let pos = new Vector(random(width), height);
         TangArray.push(new Tang(pos));
     }
 }
@@ -64,27 +64,30 @@ class Tang {
     #vel;
     #sizeX;
     #sizeY;
+    #col;
 
     constructor(pos) {
         this.#pos = pos;
         this.#sizeX = 60;
-        this.#sizeY = 30;
+        this.#sizeY = random(8,15);//laver tilfældig højde
+        this.#col = (random(20,40), random(150,200), random(30,60)); // tilfældig farve mellem mørkegrøn og lysegrøn
     }
 
 
 
     show() {
         noFill();
-        stroke(34, 139, 34); // mørkegrøn
+        stroke(this.#col)
         strokeWeight(4);
     
         beginShape();
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < this.#sizeY; i++) {//laver bevægelserne og gør det baseret på højden
             let offsetX = sin(frameCount * 0.1 + i * 0.5 + this.#pos.x * 0.01) * 5;
             let x = this.#pos.x + offsetX;
             let y = this.#pos.y - i * 10;
             vertex(x, y);
         }
+
         endShape();
     }
    
